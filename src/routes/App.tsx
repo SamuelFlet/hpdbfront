@@ -1,12 +1,29 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { Client, Provider, cacheExchange, fetchExchange } from "urql";
-import Home from "../components/Home";
-import About from "../components/About";
-import Contact from "../components/Contact";
+import { Component } from 'react';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
+
+import About from '../components/About';
+import Home from '../components/Home';
+import Login from '../pages/Login';
+
+const getToken = () => {
+  return localStorage.getItem("TOKEN_KEY");
+};
 
 const client = new Client({
   url: "https://hpdb.fly.dev/graphql",
+  fetchOptions: () => {
+    const token = getToken();
+    if (token != null) {
+      return {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+    } else {
+      return {
+        headers: { Authorization: `empty` },
+      };
+    }
+  },
   exchanges: [cacheExchange, fetchExchange],
 });
 
@@ -17,7 +34,7 @@ class App extends Component {
         <Router>
           <div>
             <h2>Welcome to React Router Tutorial</h2>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg">
               <ul className="navbar-nav mr-auto">
                 <li>
                   <Link to={"/"} className="nav-link">
@@ -39,7 +56,7 @@ class App extends Component {
             <hr />
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<Login />} />
               <Route path="/about" element={<About />} />
             </Routes>
           </div>
