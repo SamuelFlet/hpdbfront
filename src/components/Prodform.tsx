@@ -3,6 +3,10 @@ import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 import { gql, useMutation } from 'urql';
 
+
+/* The `const newProduct` is a GraphQL mutation query. It defines a mutation operation called `newProd`
+that takes three variables: `name` of type `String!`, `category` of type `String!`, and `photo` of
+type `File!`. */
 const newProduct = gql`
   mutation ($name: String!, $category: String!, $photo: File!) {
     newProd(name: $name, category: $category, file: $photo) {

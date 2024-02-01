@@ -3,6 +3,14 @@ import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 import { gql, useMutation, useQuery } from 'urql';
 
+/**
+ * GraphQL mutation to create a new listing.
+ * @param {number} cost - The cost of the listing.
+ * @param {string} description - The description of the listing.
+ * @param {File} photo - The photo file of the listing.
+ * @param {string} prodid - The ID of the product associated with the listing.
+ * @returns The newly created listing object with its properties.
+ */
 const newListing = gql`
   mutation ($cost: Float!, $description: String!, $photo: File!, $prodid: ID!) {
     newListing(cost: $cost, description: $description, file: $photo, prodid: $prodid) {
@@ -22,6 +30,10 @@ const newListing = gql`
   }
 `;
 
+/**
+ * GraphQL query to fetch all products from the prodfeed.
+ * @returns List of all products object with its properties.
+ */
 const allProducts = gql`
   query {
     prodfeed {

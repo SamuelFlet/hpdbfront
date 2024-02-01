@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
 
@@ -27,7 +26,7 @@ const client = new Client({
   exchanges: [cacheExchange, fetchExchange],
 });
 
-class App extends Component {
+class App {
   render() {
     return (
       <Provider value={client}>
