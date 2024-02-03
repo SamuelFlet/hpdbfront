@@ -1,7 +1,7 @@
-import { FormEvent, useCallback, useState } from 'react';
-import Button from 'react-bootstrap/esm/Button';
-import Form from 'react-bootstrap/Form';
-import { gql, useMutation, useQuery } from 'urql';
+import Button from "react-bootstrap/esm/Button";
+import Form from "react-bootstrap/Form";
+import { FormEvent, useCallback, useState } from "react";
+import { gql, useMutation, useQuery } from "urql";
 
 /**
  * GraphQL mutation to create a new listing.
@@ -13,7 +13,12 @@ import { gql, useMutation, useQuery } from 'urql';
  */
 const newListing = gql`
   mutation ($cost: Float!, $description: String!, $photo: File!, $prodid: ID!) {
-    newListing(cost: $cost, description: $description, file: $photo, prodid: $prodid) {
+    newListing(
+      cost: $cost
+      description: $description
+      file: $photo
+      prodid: $prodid
+    ) {
       cost
       id
       description

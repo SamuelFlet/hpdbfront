@@ -1,13 +1,15 @@
+import { getCookie, setCookie, removeCookie } from "typescript-cookie";
+
 const TOKEN_KEY = "Authorization";
 
 export const saveAuthData = ({ token }) => {
-  localStorage.setItem(TOKEN_KEY, token);
+  setCookie(TOKEN_KEY, token, { expires: 7 });
 };
 
 export const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
+  return getCookie(TOKEN_KEY);
 };
 
 export const clearStorage = () => {
-  localStorage.clear();
+  removeCookie(TOKEN_KEY)
 };

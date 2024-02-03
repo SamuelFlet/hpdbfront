@@ -1,8 +1,7 @@
-import { FormEvent, useCallback, useState } from 'react';
-import Button from 'react-bootstrap/esm/Button';
-import Form from 'react-bootstrap/Form';
-import { gql, useMutation } from 'urql';
-
+import Button from "react-bootstrap/esm/Button";
+import Form from "react-bootstrap/Form";
+import { FormEvent, useCallback, useState } from "react";
+import { gql, useMutation } from "urql";
 
 /* The `const newProduct` is a GraphQL mutation query. It defines a mutation operation called `newProd`
 that takes three variables: `name` of type `String!`, `category` of type `String!`, and `photo` of
