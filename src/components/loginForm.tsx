@@ -4,6 +4,7 @@ import { gql, useMutation } from "urql";
 import { useCallback, useState } from "react";
 import { saveAuthData } from "../authStore";
 import { setCookie } from "typescript-cookie";
+
 /*/* The `const signup` is a GraphQL mutation query that defines a mutation operation called `signup`.
 This mutation takes two variables, `email` and `password`, both of type `String!` (non-null string).
 The mutation is used to sign up a user by providing their email and password, and it returns a token
@@ -16,8 +17,12 @@ const signup = gql`
   }
 `;*/
 
-/* The `const login` is a GraphQL mutation query that defines a mutation operation called `login`. This
-mutation takes two variables, `email` and `password`, both of type `String!` (non-null string). */
+/**
+ * GraphQL mutation for logging in a user.
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ * @returns {Object} - The token generated upon successful login.
+ */
 const login = gql`
   mutation ($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -31,10 +36,13 @@ export default function LoginForm() {
   const [password, setPass] = useState("");
   const [state, executeMutation] = useMutation(login);
 
+  /**
+   * Submits the email and password to execute a mutation and saves the authentication data.
+   * @returns None
+   */
   const submit = useCallback(() => {
-
-    executeMutation({ email, password }).then(res =>{
-      saveAuthData(res.data.login)
+    executeMutation({ email, password }).then((res) => {
+      saveAuthData(res.data.login);
     });
   }, [executeMutation, email, password]);
 
