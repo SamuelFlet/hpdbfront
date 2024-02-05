@@ -10,13 +10,13 @@ const client = new Client({
   url: "https://hpdb.fly.dev/graphql",
   fetchOptions: () => {
     const token = getToken();
-    if (token != null) {
+    if (token != undefined) {
       return {
         headers: { Authorization: `Bearer ${token}` },
       };
     } else {
       return {
-        headers: { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwNjk5OTc5Mn0.3HzIRkUW-1kzj7ZMSPWEu5kQakyN2FhgrDm_m7Y8uVI` },
+        
       };
     }
   },
