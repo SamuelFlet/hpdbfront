@@ -3,19 +3,6 @@ import Form from "react-bootstrap/Form";
 import { gql, useMutation } from "urql";
 import { useCallback, useState } from "react";
 import { saveAuthData } from "../authStore";
-import { setCookie } from "typescript-cookie";
-
-/*/* The `const signup` is a GraphQL mutation query that defines a mutation operation called `signup`.
-This mutation takes two variables, `email` and `password`, both of type `String!` (non-null string).
-The mutation is used to sign up a user by providing their email and password, and it returns a token
-as a response. 
-const signup = gql`
-  mutation ($email: String!, $password: String!) {
-    signup(email: "", password: "") {
-      token
-    }
-  }
-`;*/
 
 /**
  * GraphQL mutation for logging in a user.
@@ -48,7 +35,6 @@ export default function LoginForm() {
 
   return (
     <div className="mx-auto">
-      <h2>Login</h2>
       <Form>
         <Form.Group className="mb-3" controlId="productForm.controlInput1">
           <Form.Label>Email</Form.Label>
