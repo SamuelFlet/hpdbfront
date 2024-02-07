@@ -1,7 +1,6 @@
-import About from "../components/About";
-import Home from "../components/Home";
+import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Test from "../pages/Test";
+import Newproduct from "../pages/Newproduct";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 import { getToken } from "../authStore";
@@ -22,9 +21,7 @@ const client = new Client({
         headers: { Authorization: `Bearer ${token}` },
       };
     } else {
-      return {
-        
-      };
+      return {};
     }
   },
   exchanges: [cacheExchange, fetchExchange],
@@ -44,13 +41,13 @@ export default function App() {
                 </Link>
               </li>
               <li>
-                <Link to={"/contact"} className="nav-link">
-                  Contact
+                <Link to={"/login"} className="nav-link">
+                  Login
                 </Link>
               </li>
               <li>
-                <Link to={"/about"} className="nav-link">
-                  About
+                <Link to={"/addproduct"} className="nav-link">
+                  Add Product
                 </Link>
               </li>
             </ul>
@@ -58,8 +55,8 @@ export default function App() {
           <hr />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Login />} />
-            <Route path="/about" element={<Test />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/addproduct" element={<Newproduct />} />
           </Routes>
         </div>
       </Router>
