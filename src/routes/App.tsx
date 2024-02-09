@@ -1,18 +1,13 @@
-import Container from "react-bootstrap/Container";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Nav from "react-bootstrap/Nav";
 import logo from "../img/Logo.svg";
-import Navbar from "react-bootstrap/Navbar";
-import Newlisting from "../pages/Newlisting";
-import Newproduct from "../pages/Newproduct";
+import "../styles/App.css";
 import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
-import { getToken } from "../authStore";
-import "../styles/App.css";
+import { getToken, clearStorage } from "../authStore";
 
 /**
- * Creates a new instance of the Client class with the specified configuration options.
+ * Creates a new instance of the Client className with the specified configuration options.
  * @param {object} options - The configuration options for the client.
  * @param {string} options.url - The URL of the GraphQL server.
  * @param {function} options.fetchOptions - A function that returns the options to be passed to the fetch API.
@@ -33,38 +28,52 @@ const client = new Client({
   exchanges: [cacheExchange, fetchExchange],
 });
 
+const handleClick = () => clearStorage();
+
+// function Authed() {
+//   const token = getToken();
+//   if (token !== undefined) {
+//     return (
+//       <Button onClick={handleClick} variant="outline-primary">
+//         Sign Out
+//       </Button>
+//     );
+//   }
+//   return <Nav.Link href="/login">Login</Nav.Link>;
+// }
+
 export default function App() {
   return (
     <Provider value={client}>
       <Router>
-        <Navbar className="bg-body-tertiary">
-          <Container>
-            <Navbar.Brand href="/">
-              <img
-                alt=""
-                src={logo}
-                width="30"
-                height="30"
-                className="d-inline-block align-top"
-              />{" "}
-              HPDB
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/addproduct">New Product</Nav.Link>
-            <Nav.Link href="/addlisting">New Listing</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/addproduct" element={<Newproduct />} />
-          <Route path="/addlisting" element={<Newlisting />} />
-        </Routes>
+        <div id="container">
+          <nav className="flex items-center pt-5 pb-3">
+            <Link to="/">
+              <span className="flex items-center mr-10">
+                <div className="float-left">
+                  <img src={logo} width={50} height={50} />
+                </div>
+                <p className="align-middle">HPDB</p>
+              </span>
+            </Link>
+            <Link to="/login" className="mr-5">
+              Login
+            </Link>
+            <a href="#contact" className="mr-5">
+              Contact
+            </a>
+            <a href="#about" className="mr-5">
+              About
+            </a>
+          </nav>
+
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            {/*<Route path="/addproduct" element={<Newproduct />} />
+          <Route path="/addlisting" element={<Newlisting />} /> */}
+          </Routes>
+        </div>
       </Router>
     </Provider>
   );
