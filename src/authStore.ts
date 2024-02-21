@@ -25,5 +25,6 @@ export const getToken = () => {
  * @returns None
  */
 export const clearStorage = () => {
-  removeCookie(TOKEN_KEY)
+  removeCookie(TOKEN_KEY);
+  window.location.reload();
 };
