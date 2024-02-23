@@ -1,14 +1,15 @@
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import Prodform from "../pages/Prodform";
-import Listform from "../pages/Listform";
-import Allproducts from "../pages/Allproducts";
-import Signup from "../pages/Signup";
-import logo from "../img/Logo.svg";
-import "../styles/App.css";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import { cacheExchange, Client, fetchExchange, Provider } from "urql";
-import { getToken, clearStorage } from "../authStore";
+import Allproducts from '../pages/allProducts';
+import Home from '../pages/Home';
+import Listform from '../pages/listForm';
+import Login from '../pages/Login';
+import logo from '../img/Logo.svg';
+import Prodform from '../pages/productForm';
+import Listingfeed from '../pages/listingFeed';
+import Signup from '../pages/Signup';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
+import { clearStorage, getToken } from '../authStore';
+import '../styles/App.css';
 
 /**
  * Creates a new instance of the Client className with the specified configuration options.
@@ -77,7 +78,7 @@ export default function App() {
           <nav className="flex items-center pt-5 pb-3">
             <Link to="/">
               <span className="flex items-center mr-10">
-                <div className="float-left">
+                <div className="float-left m-1">
                   <img src={logo} width={50} height={50} />
                 </div>
                 <p className="align-middle">HPDB</p>
@@ -93,6 +94,9 @@ export default function App() {
             <a href="/allproducts" className="mr-5">
               All Products
             </a>
+            <a href="/alllistings" className="mr-5">
+              All Listings
+            </a>
           </nav>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -101,6 +105,7 @@ export default function App() {
             <Route path="/addproduct" element={<Prodform />} />
             <Route path="/addlisting" element={<Listform />} />
             <Route path="/allproducts" element={<Allproducts />} />
+            <Route path="/alllistings" element={<Listingfeed />} />
           </Routes>
         </div>
       </Router>

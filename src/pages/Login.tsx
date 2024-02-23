@@ -29,6 +29,7 @@ export default function Login() {
     executeMutation({ email, password }).then((res) => {
       try {
         saveAuthData(res.data.login);
+        window.location.href = "/";
       } catch (error) {
         alert("No User Found");
       }

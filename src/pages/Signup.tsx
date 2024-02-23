@@ -31,6 +31,7 @@ export default function Signup() {
     executeMutation({ email, name, password }).then((res) => {
       try {
         saveAuthData(res.data.signup);
+        window.location.href = "/";
       } catch (error) {
         alert("No User Found");
       }
