@@ -12,7 +12,7 @@ const listingfeed = gql`
       description
       photo
       title
-      product{
+      product {
         name
       }
       postedBy {

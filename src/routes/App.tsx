@@ -1,10 +1,12 @@
-import Allproducts from '../pages/allProducts';
+import Allproducts from '../components/allProducts';
 import Home from '../pages/Home';
 import Listform from '../pages/listForm';
+import Listingfeed from '../pages/listingFeed';
 import Login from '../pages/Login';
 import logo from '../img/Logo.svg';
-import Prodform from '../pages/productForm';
-import Listingfeed from '../pages/listingFeed';
+import ProdDetail from '../components/productDetail';
+import Prodform from '../components/productForm';
+import Prodpage from '../pages/productPage';
 import Signup from '../pages/Signup';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
@@ -74,7 +76,7 @@ export default function App() {
      */
     <Provider value={client}>
       <Router>
-        <div className="px-4 mx-auto max-w-8xl sm:px-6 md:px-8">
+        <div className="px-4 mx-auto max-w-8xl">
           <nav className="flex items-center pt-5 pb-3">
             <Link to="/">
               <span className="flex items-center mr-10">
@@ -91,7 +93,7 @@ export default function App() {
             <a href="/addlisting" className="mr-5">
               New Listing
             </a>
-            <a href="/allproducts" className="mr-5">
+            <a href="/products/all" className="mr-5">
               All Products
             </a>
             <a href="/alllistings" className="mr-5">
@@ -102,9 +104,12 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/addproduct" element={<Prodform />} />
             <Route path="/addlisting" element={<Listform />} />
-            <Route path="/allproducts" element={<Allproducts />} />
+            <Route path="/products" element={<Prodpage />}>
+              <Route path=":prodid" element={<ProdDetail/>}/>
+              <Route path="new" element={<Prodform />} />
+              <Route path="all" element={<Allproducts />} />
+            </Route>
             <Route path="/alllistings" element={<Listingfeed />} />
           </Routes>
         </div>

@@ -1,4 +1,4 @@
-import { getCookie, setCookie, removeCookie } from "typescript-cookie";
+import { getCookie, removeCookie, setCookie } from "typescript-cookie";
 
 const TOKEN_KEY = "Authorization";
 

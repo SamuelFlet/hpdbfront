@@ -1,7 +1,6 @@
 import { FormEvent, useCallback, useState } from "react";
 import { gql, useMutation, useQuery } from "urql";
 
-
 /**
  * GraphQL mutation for creating a new listing with the specified parameters.
  * @param {Float} $cost - The cost of the listing.
