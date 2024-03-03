@@ -12,3 +12,12 @@ html, body {
   width: 100%;
 }
 
+@font-face {
+  font-family: "Normal"; /*Can be any text*/
+  src: local("WensleyDemo"), url("./fonts/WensleyDemo.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "notnormal"; /*Can be any text*/
+  src: local("Aller_Lt"), url("./fonts/Aller_Lt.ttf") format("truetype");
+}

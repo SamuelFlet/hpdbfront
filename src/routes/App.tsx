@@ -1,11 +1,11 @@
-import Allproducts from '../components/allProducts';
+import Allproducts from '../components/products/productFeed';
 import Home from '../pages/Home';
-import Listform from '../pages/listForm';
-import Listingfeed from '../pages/listingFeed';
+import Listform from '../components/listings/listForm';
+import ListingDetail from '../components/listings/listingDetail';
+import Listingfeed from '../components/listings/listingFeed';
 import Login from '../pages/Login';
-import logo from '../img/Logo.svg';
-import ProdDetail from '../components/productDetail';
-import Prodform from '../components/productForm';
+import ProdDetail from '../components/products/productDetail';
+import Prodform from '../components/products/productForm';
 import Prodpage from '../pages/productPage';
 import Signup from '../pages/Signup';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
@@ -21,7 +21,7 @@ import '../styles/App.css';
  * @param {Array} options.exchanges - An array of exchange functions to be used by the client.
  */
 const client = new Client({
-  url: "https://hpdb.fly.dev/graphql",
+  url: import.meta.env.VITE_DEV_URL,
   fetchOptions: () => {
     const token = getToken();
     if (token !== undefined) {
@@ -35,7 +35,10 @@ const client = new Client({
   exchanges: [cacheExchange, fetchExchange],
 });
 
-const handleClick = () => clearStorage();
+const handleClick = () => {
+  clearStorage();
+  window.location.reload();
+};
 
 /**
  * Renders a component based on the authentication status.
@@ -47,20 +50,18 @@ function Authed() {
   const token = getToken();
   if (token !== undefined) {
     return (
-      <button className="mr-5" onClick={handleClick}>
-        Sign Out
+      <button
+        className="flex px-2 border-l-2 border-black"
+        onClick={handleClick}
+      >
+        <span className="self-center">Sign Out</span>
       </button>
     );
   }
   return (
-    <div>
-      <a className="mr-5" href="/login">
-        Login
-      </a>
-      <a className="mr-5" href="/signup">
-        Signup
-      </a>
-    </div>
+    <a className="flex px-2 border-l-2 border-black" href="/login">
+      <span className="self-center">Login</span>
+    </a>
   );
 }
 
@@ -76,41 +77,56 @@ export default function App() {
      */
     <Provider value={client}>
       <Router>
-        <div className="px-4 mx-auto max-w-8xl">
-          <nav className="flex items-center pt-5 pb-3">
+        <div className="self-center my-2">
+          <div className="grid justify-center text-center">
             <Link to="/">
-              <span className="flex items-center mr-10">
-                <div className="float-left m-1">
-                  <img src={logo} width={50} height={50} />
-                </div>
-                <p className="align-middle">HPDB</p>
-              </span>
+              <p className="tracking-widest font-notnormal">
+                I WILL THINK OF A MOTTO LATER
+              </p>
+              <p className="text-[8rem] font-titlefont">HPDB</p>
             </Link>
+          </div>
+          <nav className="flex justify-center h-16 border-black font-notnormal border-y-2">
             <Authed />
-            <a href="/addproduct" className="mr-5">
-              New Product
+            <a
+              href="/products/new"
+              className="flex px-2 border-l-2 border-black"
+            >
+              <span className="self-center ">New Product</span>
             </a>
-            <a href="/addlisting" className="mr-5">
-              New Listing
+            <a
+              href="/listings/new"
+              className="flex px-2 border-l-2 border-black"
+            >
+              <span className="self-center">New Listing</span>
             </a>
-            <a href="/products/all" className="mr-5">
-              All Products
-            </a>
-            <a href="/alllistings" className="mr-5">
-              All Listings
-            </a>
+            <Link
+              to="/products/all"
+              className="flex px-2 border-l-2 border-black"
+            >
+              <span className="self-center">All Products</span>
+            </Link>
+            <Link
+              to="/listings/all"
+              className="flex px-2 border-black border-x-2"
+            >
+              <span className="self-center">All Listings</span>
+            </Link>
           </nav>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/addlisting" element={<Listform />} />
+            <Route path="/listings" element={<Prodpage />}>
+              <Route path=":listingid" element={<ListingDetail />} />
+              <Route path="new" element={<Listform />} />
+              <Route path="all" element={<Listingfeed />} />
+            </Route>
             <Route path="/products" element={<Prodpage />}>
-              <Route path=":prodid" element={<ProdDetail/>}/>
+              <Route path=":prodid" element={<ProdDetail />} />
               <Route path="new" element={<Prodform />} />
               <Route path="all" element={<Allproducts />} />
             </Route>
-            <Route path="/alllistings" element={<Listingfeed />} />
           </Routes>
         </div>
       </Router>

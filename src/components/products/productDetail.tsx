@@ -14,7 +14,7 @@ const prodDetail = gql`
 export default function ProdDetail() {
   const { state } = useLocation();
 
-  const id = parseInt(state.prodid!)
+  const id = parseInt(state.prodid!);
   const [result] = useQuery({
     query: prodDetail,
     variables: { id },

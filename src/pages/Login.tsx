@@ -36,37 +36,54 @@ export default function Login() {
     });
   }, [executeMutation, email, password]);
 
+  function signup(e) {
+    e.preventDefault();
+    window.location.href = "/signup";
+  }
+
   return (
-    <div className="grid grid-cols-1 gap-6">
+    <div>
       <h1>Login</h1>
-      <label className="block">
-        <span className="text-grey-700">Email</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Password</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="password"
-          value={password}
-          onChange={(e) => setPass(e.target.value)}
-        ></input>
-      </label>
-      <label className="block">
-        <button
-          type="submit"
-          onClick={submit}
-          className="p-1 text-black bg-gray-100 border-transparent rounded-md"
-          disabled={state.fetching}
-        >
-          Submit
-        </button>
-      </label>
+      <div className="flex flex-wrap justify-center">
+        <div className="grid grid-cols-1 gap-6">
+          <label className="block">
+            <span className="text-grey-700">Email</span>
+            <input
+              className="block mt-1 text-black form-input"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+          </label>
+          <label className="block">
+            <span className="text-grey-700">Password</span>
+            <input
+              className="block mt-1 text-black form-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPass(e.target.value)}
+            ></input>
+          </label>
+          <label className="block">
+            <button
+              type="submit"
+              onClick={submit}
+              className="p-1 text-black bg-gray-100 border-transparent rounded-md"
+              disabled={state.fetching}
+            >
+              Submit
+            </button>
+            <button
+              type="button"
+              onClick={signup}
+              className="p-1 mx-2 text-black bg-gray-100 border-transparent rounded-md"
+              disabled={state.fetching}
+            >
+              Sign Up
+            </button>
+          </label>
+        </div>
+      </div>
     </div>
   );
 }
