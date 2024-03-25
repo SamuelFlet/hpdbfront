@@ -1,6 +1,11 @@
 import { useLocation } from "react-router-dom";
 import { gql, useQuery } from "urql";
 
+/**
+ * GraphQL query to fetch details of a listing based on the provided ID.
+ * @param {Int} $id - The ID of the listing to fetch details for.
+ * @returns The title, description, cost, photo, product name, and name of the user who posted the listing.
+ */
 const listDetail = gql`
   query ($id: Int!) {
     getListing(id: $id) {
@@ -11,7 +16,7 @@ const listDetail = gql`
       product {
         name
       }
-      postedBy {
+      postedby {
         name
       }
     }

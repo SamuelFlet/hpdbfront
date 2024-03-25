@@ -1,6 +1,6 @@
 import { gql, useQuery } from "urql";
 import { Link } from "react-router-dom";
-
+import Rating from "react-rating";
 /**
  * GraphQL query to fetch all products from the prodfeed.
  * @returns List of all products.
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const allProducts = gql`
   query {
     prodfeed {
+      rating
       id
       name
       category
@@ -35,6 +36,9 @@ export default function Allproducts() {
             key={prods.id}
             state={{ prodid: prods.id }}
             className="m-2 overflow-hidden w-96 hover:shadow-2xl bg-slate-100 "
+            onClick={() => {
+              window.scroll(0, 0);
+            }}
           >
             <div>
               <img
@@ -43,12 +47,17 @@ export default function Allproducts() {
                 alt=""
               />
               <div className="p-6">
-                <span className="block text-base font-semibold text-slate-400">
+                <span className="block text-base font-semibold prodname">
                   {prods.name}
                 </span>
-                <span className="block text-sm font-semibold text-slate-600">
+                <span className="block text-sm font-semibold prodcat">
                   {prods.category}
                 </span>
+                <div className="flex pt-2">
+                  {/* @ts-expect-error Server Component */}
+                  <Rating initialRating={prods.rating} readonly />
+                  <p className="pl-2">({prods.rating})</p>
+                </div>
               </div>
             </div>
           </Link>

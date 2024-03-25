@@ -1,17 +1,17 @@
-import Allproducts from '../components/products/productFeed';
-import Home from '../pages/Home';
-import Listform from '../components/listings/listForm';
-import ListingDetail from '../components/listings/listingDetail';
-import Listingfeed from '../components/listings/listingFeed';
-import Login from '../pages/Login';
-import ProdDetail from '../components/products/productDetail';
-import Prodform from '../components/products/productForm';
-import Prodpage from '../pages/productPage';
-import Signup from '../pages/Signup';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
-import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
-import { clearStorage, getToken } from '../authStore';
-import '../styles/App.css';
+import Allproducts from "../components/products/productFeed";
+import Home from "../pages/Home";
+import Listform from "../components/listings/listForm";
+import ListingDetail from "../components/listings/listingDetail";
+import Listingfeed from "../components/listings/listingFeed";
+import Login from "../pages/Login";
+import ProdDetail from "../components/products/productDetail";
+import Prodform from "../components/products/productForm";
+import Prodpage from "../pages/productPage";
+import Signup from "../pages/Signup";
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import { cacheExchange, Client, fetchExchange, Provider } from "urql";
+import { clearStorage, getToken } from "../authStore";
+import "../styles/App.css";
 
 /**
  * Creates a new instance of the Client className with the specified configuration options.
@@ -40,6 +40,17 @@ const handleClick = () => {
   window.location.reload();
 };
 
+// function themeChange() {
+//   const element = document.getElementById("main");
+//   if (element?.classList.contains("theme-light")) {
+//     element.classList.remove("theme-light");
+//     element.classList.add("theme-dark");
+//   } else if (element?.classList.contains("theme-dark")) {
+//     element.classList.remove("theme-dark");
+//     element.classList.add("theme-light");
+//   }
+// }
+
 /**
  * Renders a component based on the authentication status.
  * If a token is present, it renders a "Sign Out" button that triggers the handleClick function.
@@ -51,7 +62,7 @@ function Authed() {
   if (token !== undefined) {
     return (
       <button
-        className="flex px-2 border-l-2 border-black"
+        className="flex px-2 border-l-2 nav-children"
         onClick={handleClick}
       >
         <span className="self-center">Sign Out</span>
@@ -59,7 +70,7 @@ function Authed() {
     );
   }
   return (
-    <a className="flex px-2 border-l-2 border-black" href="/login">
+    <a className="flex px-2 border-l-2 nav-children" href="/login">
       <span className="self-center">Login</span>
     </a>
   );
@@ -79,39 +90,48 @@ export default function App() {
       <Router>
         <div className="self-center my-2">
           <div className="grid justify-center text-center">
-            <Link to="/">
+            <Link id="logo" to="/">
               <p className="tracking-widest font-notnormal">
                 I WILL THINK OF A MOTTO LATER
               </p>
               <p className="text-[8rem] font-titlefont">HPDB</p>
             </Link>
           </div>
-          <nav className="flex justify-center h-16 border-black font-notnormal border-y-2">
+          <nav
+            id="navbar"
+            className="flex justify-center h-16 font-notnormal border-y-2"
+          >
             <Authed />
             <a
               href="/products/new"
-              className="flex px-2 border-l-2 border-black"
+              className="flex px-2 border-l-2 nav-children"
             >
               <span className="self-center ">New Product</span>
             </a>
             <a
               href="/listings/new"
-              className="flex px-2 border-l-2 border-black"
+              className="flex px-2 border-l-2 nav-children"
             >
               <span className="self-center">New Listing</span>
             </a>
             <Link
               to="/products/all"
-              className="flex px-2 border-l-2 border-black"
+              className="flex px-2 border-l-2 nav-children"
             >
               <span className="self-center">All Products</span>
             </Link>
             <Link
               to="/listings/all"
-              className="flex px-2 border-black border-x-2"
+              className="flex px-2 border-x-2 nav-children"
             >
               <span className="self-center">All Listings</span>
             </Link>
+            {/* <button
+              className="flex px-2 border-black border-x-2"
+              onClick={themeChange}
+            >
+              <span className="self-center">Change Theme</span>
+            </button> */}
           </nav>
           <Routes>
             <Route path="/" element={<Home />} />

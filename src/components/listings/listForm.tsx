@@ -17,11 +17,13 @@ const newListing = gql`
     $description: String!
     $photo: File!
     $prodid: ID!
+    $condition: String!
   ) {
     newListing(
       cost: $cost
       title: $title
       description: $description
+      condition: $condition
       file: $photo
       prodid: $prodid
     ) {
@@ -30,11 +32,12 @@ const newListing = gql`
       title
       description
       photo
+      condition
       product {
         category
         name
       }
-      postedBy {
+      postedby {
         email
         name
       }
@@ -55,12 +58,15 @@ const allProducts = gql`
   }
 `;
 
+const conditions = ["like new", "good", "meh", "for parts"];
+
 export default function Listform() {
   const [result] = useQuery({ query: allProducts });
   const [cost, setCost] = useState(0);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState<File>();
+  const [condition, setCondition] = useState("");
   const [prodid, setProdid] = useState("");
   const [state, executeMutation] = useMutation(newListing);
 
@@ -118,6 +124,21 @@ export default function Listform() {
           {data.prodfeed.map((prods) => (
             <option key={prods.id} value={prods.id}>
               {prods.name}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="block">
+        <span className="text-grey-700">Condition</span>
+        <br></br>
+        <select
+          className="block w-1/4 mt-1 text-black form-input"
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+        >
+          {conditions.map((cons) => (
+            <option key={cons} value={cons}>
+              {cons}
             </option>
           ))}
         </select>

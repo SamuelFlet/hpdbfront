@@ -12,10 +12,11 @@ const listingfeed = gql`
       description
       photo
       title
+      condition
       product {
         name
       }
-      postedBy {
+      postedby {
         name
         email
       }
@@ -46,7 +47,7 @@ export default function Listingfeed() {
             <div>
               <img
                 src={listings.photo}
-                className="object-cover w-full h-52"
+                className="object-cover w-full h-full"
                 alt=""
               />
               <div className="p-6">
@@ -55,6 +56,12 @@ export default function Listingfeed() {
                 </span>
                 <span className="block text-sm font-semibold text-slate-600">
                   {listings.description}
+                </span>
+                <span className="block text-sm font-semibold text-slate-600">
+                  {listings.condition}
+                </span>
+                <span className="block text-sm font-semibold text-slate-600">
+                  {listings.cost}
                 </span>
               </div>
             </div>
