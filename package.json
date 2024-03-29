@@ -10,12 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "embla-carousel": "^8.0.0",
-    "embla-carousel-react": "^8.0.0",
+    "@preline/dropdown": "^2.0.2",
+    "preline": "^2.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-rating": "^2.0.5",
-    "react-router-dom": "^6.22.0",
+    "react-router-dom": "^6.22.3",
     "typescript-cookie": "^1.0.6",
     "urql": "^4.0.6"
   },

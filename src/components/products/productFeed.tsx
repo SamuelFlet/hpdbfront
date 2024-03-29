@@ -8,10 +8,10 @@ import Rating from "react-rating";
 const allProducts = gql`
   query {
     prodfeed {
-      rating
       id
       name
       category
+      rating
       photo
     }
   }
@@ -55,8 +55,11 @@ export default function Allproducts() {
                 </span>
                 <div className="flex pt-2">
                   {/* @ts-expect-error Server Component */}
-                  <Rating initialRating={prods.rating} readonly />
-                  <p className="pl-2">({prods.rating})</p>
+                  <Rating
+                    initialRating={prods.rating[0].avg.slice(0, 4)}
+                    readonly
+                  />
+                  <p className="pl-2">({prods.rating[0].avg.slice(0, 4)})</p>
                 </div>
               </div>
             </div>

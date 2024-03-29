@@ -13,6 +13,7 @@ const prodDetail = gql`
       name
       photo
     }
+    avg(id: $id)
   }
 `;
 
@@ -52,7 +53,7 @@ export default function ProdDetail() {
 
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
-
+  console.log(data)
   return (
     <div className="block">
       <div className="flex px-16 py-8 shadow-xl">
