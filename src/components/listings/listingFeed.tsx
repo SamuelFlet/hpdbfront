@@ -1,8 +1,11 @@
 import { useQuery, gql } from "urql";
 import { Link } from "react-router-dom";
+
+
 /**
- * GraphQL query to fetch feed data including cost, description, photo, title, and information about the user who posted it.
- * @returns GraphQL query string
+ * GraphQL query to fetch a feed listing with specific fields.
+ * Fields returned include id, cost, description, photo, title, condition,
+ * product name, and posted by user's name and email.
  */
 const listingfeed = gql`
   query {
@@ -34,40 +37,31 @@ export default function Listingfeed() {
 
   return (
     <div>
-      <h1 className="text-lg">All Listings</h1>
-
-      <div className="grid w-full grid-cols-1 grid-flow-cols-dense md:grid-cols-2 xl:grid-cols-3">
-        {data.feed.map((listings) => (
-          <Link
-            to={`../${listings.id}-${listings.title}`}
-            key={listings.id}
-            state={{ listingid: listings.id }}
-            className="m-2 overflow-hidden w-96 hover:shadow-2xl bg-slate-100 "
-          >
-            <div>
-              <img
-                src={listings.photo}
-                className="object-cover w-full h-full"
-                alt=""
-              />
-              <div className="p-6">
-                <span className="block text-base font-semibold text-slate-400">
-                  {listings.title}
-                </span>
-                <span className="block text-sm font-semibold text-slate-600">
-                  {listings.description}
-                </span>
-                <span className="block text-sm font-semibold text-slate-600">
-                  {listings.condition}
-                </span>
-                <span className="block text-sm font-semibold text-slate-600">
-                  {listings.cost}
-                </span>
-              </div>
+    <div className="grid w-full lg:grid-cols-2 xl:grid-cols-3">
+      {data.feed.map((lists) => (
+        <Link
+          to={`../${lists.id}`}
+          key={lists.id}
+          state={{ listingid: lists.id }}
+          className="m-2 overflow-hidden images hover:shadow-xl"
+          onClick={() => {
+            window.scroll(0, 0);
+          }}
+        >
+          <div>
+            <img
+              src={lists.photo}
+              className="object-contain w-full h-48"
+              alt=""
+            />
+            <div className="p-6 font-semibold ">
+              <span className="block text-base dark:text-white">{lists.title}</span>
+              <span className="block text-sm dark:text-slate-300">{lists.description}</span>
             </div>
-          </Link>
-        ))}
-      </div>
+          </div>
+        </Link>
+      ))}
     </div>
+  </div>
   );
 }

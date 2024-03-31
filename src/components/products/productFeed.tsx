@@ -1,6 +1,7 @@
 import { gql, useQuery } from "urql";
 import { Link } from "react-router-dom";
 import Rating from "react-rating";
+
 /**
  * GraphQL query to fetch all products from the prodfeed.
  * @returns List of all products.
@@ -27,15 +28,13 @@ export default function Allproducts() {
 
   return (
     <div>
-      <h1 className="text-lg">All Products</h1>
-
-      <div className="grid w-full grid-cols-1 grid-flow-cols-dense md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid w-full lg:grid-cols-2 xl:grid-cols-3">
         {data.prodfeed.map((prods) => (
           <Link
             to={`../${prods.name}`}
             key={prods.id}
             state={{ prodid: prods.id }}
-            className="m-2 overflow-hidden w-96 hover:shadow-2xl bg-slate-100 "
+            className="m-2 mb-4 overflow-hidden h-96 w-96 hover:shadow-xl"
             onClick={() => {
               window.scroll(0, 0);
             }}
@@ -43,23 +42,21 @@ export default function Allproducts() {
             <div>
               <img
                 src={prods.photo}
-                className="object-cover w-full h-52"
+                className="object-contain w-full h-52"
                 alt=""
               />
-              <div className="p-6">
-                <span className="block text-base font-semibold prodname">
-                  {prods.name}
-                </span>
-                <span className="block text-sm font-semibold prodcat">
-                  {prods.category}
-                </span>
+              <div className="p-6 font-semibold ">
+                <span className="block text-base dark:text-white">{prods.name}</span>
+                <span className="block text-sm dark:text-slate-300">{prods.category}</span>
                 <div className="flex pt-2">
                   {/* @ts-expect-error Server Component */}
                   <Rating
+                    emptySymbol="fa fa-star-o fa-2x dark:text-white"
+                    fullSymbol="fa fa-star fa-2x dark:text-white"
                     initialRating={prods.rating[0].avg.slice(0, 4)}
                     readonly
                   />
-                  <p className="pl-2">({prods.rating[0].avg.slice(0, 4)})</p>
+                  <p className="pl-2 dark:text-slate-300">({prods.rating[0].avg.slice(0, 4)})</p>
                 </div>
               </div>
             </div>

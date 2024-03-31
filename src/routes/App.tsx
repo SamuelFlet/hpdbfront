@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 import { clearStorage, getToken } from "../authStore";
 import "../styles/App.css";
-
+import { HSThemeAppearance } from "../theme";
 /**
  * Creates a new instance of the Client className with the specified configuration options.
  * @param {object} options - The configuration options for the client.
@@ -40,16 +40,54 @@ const handleClick = () => {
   window.location.reload();
 };
 
-// function themeChange() {
-//   const element = document.getElementById("main");
-//   if (element?.classList.contains("theme-light")) {
-//     element.classList.remove("theme-light");
-//     element.classList.add("theme-dark");
-//   } else if (element?.classList.contains("theme-dark")) {
-//     element.classList.remove("theme-dark");
-//     element.classList.add("theme-light");
-//   }
-// }
+/**
+ * Initializes the HSThemeAppearance module and sets up event listeners for changes in theme appearance.
+ * - Listens for custom event 'on-hs-appearance-change' and updates switchable themes accordingly.
+ * @returns None
+ */
+HSThemeAppearance.init();
+
+window
+  .matchMedia("(prefers-color-scheme: default)")
+  .addEventListener("change", () => {
+    if (HSThemeAppearance.getOriginalAppearance() === "auto") {
+      HSThemeAppearance.setAppearance("auto", false);
+    }
+  });
+
+window.addEventListener("load", () => {
+  const $clickableThemes = document.querySelectorAll(
+    "[data-hs-theme-click-value]"
+  );
+  const $switchableThemes = document.querySelectorAll("[data-hs-theme-switch]");
+
+  $clickableThemes.forEach(($item) => {
+    $item.addEventListener("click", () =>
+      HSThemeAppearance.setAppearance(
+        $item.getAttribute("data-hs-theme-click-value"),
+        true,
+        // @ts-ignore
+        $item
+      )
+    );
+  });
+
+  $switchableThemes.forEach(($item) => {
+    $item.addEventListener("change", (e) => {
+      // @ts-ignore
+      HSThemeAppearance.setAppearance(e.target.checked ? "dark" : "default");
+    });
+    // @ts-ignore
+    $item.checked = HSThemeAppearance.getAppearance() === "dark";
+  });
+
+  window.addEventListener("on-hs-appearance-change", (e) => {
+    $switchableThemes.forEach(($item) => {
+      // @ts-ignore
+      $item.checked = e.detail === "dark";
+    });
+  });
+});
 
 /**
  * Renders a component based on the authentication status.
@@ -62,7 +100,7 @@ function Authed() {
   if (token !== undefined) {
     return (
       <button
-        className="flex px-2 border-l-2 nav-children"
+        className="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         onClick={handleClick}
       >
         <span className="self-center">Sign Out</span>
@@ -70,8 +108,11 @@ function Authed() {
     );
   }
   return (
-    <a className="flex px-2 border-l-2 nav-children" href="/login">
-      <span className="self-center">Login</span>
+    <a
+      className="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+      href="/login"
+    >
+      Login
     </a>
   );
 }
@@ -89,19 +130,19 @@ export default function App() {
     <Provider value={client}>
       <Router>
         <div className="self-center">
-          <header className="relative z-50 flex flex-wrap w-full py-4 text-sm bg-white sm:justify-start sm:flex-nowrap dark:bg-gray-800">
+          <header className="relative z-50 flex flex-wrap w-full py-4 text-sm bg-white border-b sm:justify-start sm:flex-nowrap dark:bg-gray-800">
             <nav
               className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
               aria-label="Global"
             >
               <div className="flex items-center justify-between">
                 <a
-                  className="flex-none text-xl font-semibold dark:text-white"
+                  className="flex-none text-xl font-semibold font-titlefont dark:text-white"
                   href="/"
                 >
-                  Brand
+                  HPDB
                 </a>
-                <div className="sm:hidden">
+                <div className="sm:hidden font-notnormal">
                   <button
                     type="button"
                     className="inline-flex items-center justify-center p-2 text-gray-800 bg-white border border-gray-200 rounded-lg shadow-sm hs-collapse-toggle gap-x-2 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-gray-700 dark:text-white dark:hover:bg-white/10 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
@@ -145,15 +186,10 @@ export default function App() {
               </div>
               <div
                 id="navbar-with-mega-menu"
-                className="hidden overflow-hidden transition-all duration-300 hs-collapse basis-full grow sm:block"
+                className="hidden overflow-hidden transition-all duration-300 font-notnormal hs-collapse basis-full grow sm:block"
               >
                 <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-                  <a
-                    className="font-medium text-gray-600 hover:text-gray-400 dark:text-gray-400 dark:hover:text-gray-500 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                    href="/login"
-                  >
-                    Login
-                  </a>
+                  <Authed />
                   <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]">
                     <button
                       id="hs-mega-menu-basic-dr"
@@ -232,6 +268,55 @@ export default function App() {
                       </Link>
                     </div>
                   </div>
+                  <button
+                    type="button"
+                    className="flex items-center font-medium text-gray-600 hs-dark-mode-active:hidden hs-dark-mode group hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-500"
+                    data-hs-theme-click-value="dark"
+                  >
+                    <svg
+                      className="flex-shrink-0 size-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    className="items-center hidden font-medium text-gray-600 hs-dark-mode-active:block hs-dark-mode group hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-500"
+                    data-hs-theme-click-value="light"
+                  >
+                    <svg
+                      className="flex-shrink-0 size-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="4" />
+                      <path d="M12 8a2 2 0 1 0 4 4" />
+                      <path d="M12 2v2" />
+                      <path d="M12 20v2" />
+                      <path d="m4.93 4.93 1.41 1.41" />
+                      <path d="m17.66 17.66 1.41 1.41" />
+                      <path d="M2 12h2" />
+                      <path d="M20 12h2" />
+                      <path d="m6.34 17.66-1.41 1.41" />
+                      <path d="m19.07 4.93-1.41 1.41" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </nav>
