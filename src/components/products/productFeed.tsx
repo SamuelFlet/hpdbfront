@@ -27,14 +27,14 @@ export default function Allproducts() {
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <div>
-      <div className="grid w-full lg:grid-cols-2 xl:grid-cols-3">
+    <div className="flex items-center justify-center">
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3">
         {data.prodfeed.map((prods) => (
           <Link
             to={`../${prods.name}`}
             key={prods.id}
             state={{ prodid: prods.id }}
-            className="m-2 mb-4 overflow-hidden h-96 w-96 hover:shadow-xl"
+            className="p-1 m-2 mb-4 overflow-hidden w-96 hover:shadow-lg"
             onClick={() => {
               window.scroll(0, 0);
             }}
@@ -45,18 +45,24 @@ export default function Allproducts() {
                 className="object-contain w-full h-52"
                 alt=""
               />
-              <div className="p-6 font-semibold ">
-                <span className="block text-base dark:text-white">{prods.name}</span>
-                <span className="block text-sm dark:text-slate-300">{prods.category}</span>
+              <div className="px-6 py-4 font-semibold ">
+                <span className="block text-base dark:text-white">
+                  {prods.name}
+                </span>
+                <span className="block text-sm dark:text-slate-400">
+                  {prods.category}
+                </span>
                 <div className="flex pt-2">
                   {/* @ts-expect-error Server Component */}
                   <Rating
                     emptySymbol="fa fa-star-o fa-2x dark:text-white"
                     fullSymbol="fa fa-star fa-2x dark:text-white"
-                    initialRating={prods.rating[0].avg.slice(0, 4)}
+                    initialRating={parseInt(prods.rating[0].avg)}
                     readonly
                   />
-                  <p className="pl-2 dark:text-slate-300">({prods.rating[0].avg.slice(0, 4)})</p>
+                  <p className="pl-2 dark:text-slate-300">
+                    ({parseFloat(prods.rating[0].avg).toFixed(2)})
+                  </p>
                 </div>
               </div>
             </div>
