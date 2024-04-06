@@ -129,10 +129,7 @@ function Authed() {
 }
 
 export default function App() {
-  const location = useLocation();
-  useEffect(() => {
-    window.HSStaticMethods.autoInit();
-  }, [location.pathname]);
+
   return (
     /**
      * Renders the main application component with the provided client as the context value.
