@@ -13,8 +13,7 @@ import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 import { clearStorage, getToken } from "../authStore";
 import "../styles/App.css";
 import { HSThemeAppearance } from "../theme";
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+
 
 import "preline/preline";
 import { IStaticMethods } from "preline/preline";
