@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@preline/dropdown": "^2.0.2",
-    "preline": "^2.0.3",
+    "@preline/dropdown": "^2.1.0",
+    "preline": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-rating": "^2.0.5",
