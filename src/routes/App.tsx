@@ -13,6 +13,17 @@ import { cacheExchange, Client, fetchExchange, Provider } from "urql";
 import { clearStorage, getToken } from "../authStore";
 import "../styles/App.css";
 import { HSThemeAppearance } from "../theme";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+import "preline/preline";
+import { IStaticMethods } from "preline/preline";
+declare global {
+  interface Window {
+    HSStaticMethods: IStaticMethods;
+  }
+}
+
 /**
  * Creates a new instance of the Client className with the specified configuration options.
  * @param {object} options - The configuration options for the client.
@@ -118,6 +129,10 @@ function Authed() {
 }
 
 export default function App() {
+  const location = useLocation();
+  useEffect(() => {
+    window.HSStaticMethods.autoInit();
+  }, [location.pathname]);
   return (
     /**
      * Renders the main application component with the provided client as the context value.
