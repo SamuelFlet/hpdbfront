@@ -477,6 +477,11 @@
   resolved "https://registry.yarnpkg.com/@preline/dropdown/-/dropdown-2.1.0.tgz#70cacfdbeaf6aa48a4a851856a80a8e0cccbff13"
   integrity sha512-Lp4W0PnF3dM4ysWGsF8WYIK7JU6F4NzyQHMqVYHcgbxXlaKhIzyYtERDBWVQqoDE3j3p6NahHVDoepArd1Y88w==
 
+"@preline/select@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@preline/select/-/select-2.1.0.tgz#45ed22984d43ddbb110b8c8d5255489e82dc2120"
+  integrity sha512-Uz2leXyz9R/WJXB/p/fm3cyZraWzNa1xyOkYKlxMXo/v+miNxgHQbmjRfO4CeIsrDlDigd4dxYoH4O9OjdN7YQ==
+
 "@remix-run/router@1.15.3":
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.15.3.tgz#d2509048d69dbb72d5389a14945339f1430b2d3c"
