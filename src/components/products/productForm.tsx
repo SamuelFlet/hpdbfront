@@ -38,54 +38,78 @@ export default function Prodform() {
   }, [executeMutation, name, category, photo]);
 
   return (
-    <div className="grid grid-cols-1 gap-6">
-      <h1>New Product</h1>
-      <label className="block">
-        <span className="text-grey-700">Product Name</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="BLON BL-03"
-        ></input>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Category</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="text"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="IEM"
-        ></input>
-      </label>
-      <label htmlFor="file" className="block">
-        <span className="text-grey-700">Product Image</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="file"
-          name="photo"
-          accept="image/png, image/jpeg, image/jpg"
-          id="file"
-          onChange={(e: FormEvent) => {
-            const files = (e.target as HTMLInputElement).files;
-            if (files && files.length > 0) {
-              setPhoto(files[0]);
-            }
-          }}
-        ></input>
-      </label>
-      <label className="block">
-        <button
-          type="submit"
-          onClick={submit}
-          className="p-1 text-black bg-gray-100 border-transparent rounded-md"
-          disabled={state.fetching}
-        >
-          Submit
-        </button>
-      </label>
+    <div className="flex flex-col pt-8 pl-16">
+      <h1 className="mb-4 text-2xl dark:text-white">Create New Listing</h1>
+      <div className="w-3/4 md:w-1/2">
+        <div className="mb-4">
+          <label
+            className="block mb-2 text-sm font-medium dark:text-white"
+            htmlFor="input-label-with-helper-text"
+          >
+            Product Name
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            id="input-label-with-helper-text"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            placeholder="Example Name"
+            aria-describedby="hs-input-helper-text"
+          />
+          <p className="mt-2 text-sm text-gray-500" id="hs-input-helper-text">
+            This is the name of the product
+          </p>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="textarea-label"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Product Category
+          </label>
+          <input
+            type="text"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            id="input-label-with-helper-text"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            placeholder="IEM/TWS"
+            aria-describedby="hs-input-helper-text"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="file"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Photo of Product
+          </label>
+          <input
+            className="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm pe-11 rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            type="file"
+            name="photo"
+            accept="image/png, image/jpeg, image/jpg"
+            id="file"
+            onChange={(e: FormEvent) => {
+              const files = (e.target as HTMLInputElement).files;
+              if (files && files.length > 0) {
+                setPhoto(files[0]);
+              }
+            }}
+          ></input>
+        </div>
+        <label className="block">
+          <button
+            type="submit"
+            onClick={submit}
+            className="p-1 text-black bg-gray-100 border-transparent rounded-md"
+            disabled={state.fetching}
+          >
+            Submit
+          </button>
+        </label>
+      </div>
     </div>
   );
 }

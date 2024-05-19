@@ -71,8 +71,8 @@ export default function Listform() {
   const [state, executeMutation] = useMutation(newListing);
 
   const submit = useCallback(() => {
-    executeMutation({ cost, title, description, photo, prodid });
-  }, [executeMutation, cost, description, photo, prodid]);
+    executeMutation({ cost, title, description, condition, photo, prodid });
+  }, [executeMutation, cost, description, condition, photo, prodid]);
 
   const { data, fetching, error } = result;
 
@@ -80,95 +80,140 @@ export default function Listform() {
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <div className="grid grid-cols-1 gap-6">
-      <h1>New Listing</h1>
-      <label className="block">
-        <span className="text-grey-700">Listing Title</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Blah Blah Blah"
-        ></input>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Listing Description</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Blah Blah Blah"
-        ></input>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Price</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="number"
-          value={cost}
-          onChange={(e) => setCost(Number(e.target.value))}
-          step={0.01}
-        ></input>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Product</span>
-        <br></br>
-        <select
-          className="block mt-1 text-black form-input"
-          value={prodid}
-          onChange={(e) => setProdid(e.target.value)}
-        >
-          <option>List of Products</option>
-          {data.prodfeed.map((prods) => (
-            <option key={prods.id} value={prods.id}>
-              {prods.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label className="block">
-        <span className="text-grey-700">Condition</span>
-        <br></br>
-        <select
-          className="block w-1/4 mt-1 text-black form-input"
-          value={condition}
-          onChange={(e) => setCondition(e.target.value)}
-        >
-          {conditions.map((cons) => (
-            <option key={cons} value={cons}>
-              {cons}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="file" className="block">
-        <span className="text-grey-700">Listing Image</span>
-        <input
-          className="block mt-1 text-black form-input"
-          type="file"
-          name="photo"
-          accept="image/png, image/jpeg, image/jpg"
-          id="file"
-          onChange={(e: FormEvent) => {
-            const files = (e.target as HTMLInputElement).files;
-            if (files && files.length > 0) {
-              setPhoto(files[0]);
-            }
-          }}
-        ></input>
-      </label>
-      <label className="block">
-        <button
-          type="submit"
-          onClick={submit}
-          className="p-1 text-black bg-gray-100 border-transparent rounded-md"
-          disabled={state.fetching}
-        >
-          Submit
-        </button>
-      </label>
+    <div className="flex flex-col pt-8 pl-16">
+      <h1 className="mb-4 text-2xl dark:text-white">Create New Listing</h1>
+      <div className="w-3/4 md:w-1/2">
+        <div className="mb-4">
+          <label
+            className="block mb-2 text-sm font-medium dark:text-white"
+            htmlFor="input-label-with-helper-text"
+          >
+            Listing Title
+          </label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            id="input-label-with-helper-text"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            placeholder="Example Title"
+            aria-describedby="hs-input-helper-text"
+          />
+          <p className="mt-2 text-sm text-gray-500" id="hs-input-helper-text">
+            This is the title for your listing
+          </p>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="textarea-label"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Listing Description
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            id="textarea-label"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            rows={3}
+            placeholder="Example description..."
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="product-label"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Product
+          </label>
+          <select
+            value={prodid}
+            onChange={(e) => setProdid(e.target.value)}
+            name="product"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            id="product-label"
+          >
+            {data.prodfeed.map((prods) => (
+              <option key={prods.id} value={prods.id}>
+                {prods.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="condition-label"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Condition
+          </label>
+          <select
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            name="condition"
+            className="block w-full px-4 py-3 text-sm border-gray-200 rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            id="condition-label"
+          >
+            {conditions.map((cons) => (
+              <option key={cons} value={cons}>
+                {cons}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="cost-label"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Listing Cost
+          </label>
+          <div className="flex">
+            <span className="inline-flex items-center px-4 text-sm text-gray-500 border border-gray-200 min-w-fit rounded-s-md border-e-0 bg-gray-50 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-400">
+              CAD$
+            </span>
+            <input
+              value={cost}
+              onChange={(e) => setCost(Number(e.target.value))}
+              type="number"
+              id="cost-label"
+              className="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm pe-11 rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+        <label
+            htmlFor="file"
+            className="block mb-2 text-sm font-medium dark:text-white"
+          >
+            Add a photo to your listing
+          </label>
+          <input
+            className="block w-full px-4 py-3 text-sm border-gray-200 shadow-sm pe-11 rounded-e-lg focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+            type="file"
+            name="photo"
+            accept="image/png, image/jpeg, image/jpg"
+            id="file"
+            onChange={(e: FormEvent) => {
+              const files = (e.target as HTMLInputElement).files;
+              if (files && files.length > 0) {
+                setPhoto(files[0]);
+              }
+            }}
+          ></input>
+        </div>
+        <label className="block">
+          <button
+            type="submit"
+            onClick={submit}
+            className="p-1 text-black bg-gray-100 border-transparent rounded-md"
+            disabled={state.fetching}
+          >
+            Submit
+          </button>
+        </label>
+      </div>
     </div>
   );
 }
+``;
