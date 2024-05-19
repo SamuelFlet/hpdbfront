@@ -21,8 +21,11 @@ export default function Login() {
   const [password, setPass] = useState("");
   const [state, executeMutation] = useMutation(login);
 
+
   /**
-   * Submits the email and password to execute a mutation and save the authentication data.
+   * Submits the email and password for authentication using a mutation.
+   * If successful, saves the authentication data and redirects to the home page.
+   * If no user is found, displays an alert message.
    * @returns None
    */
   const submit = useCallback(() => {

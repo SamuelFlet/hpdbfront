@@ -1,22 +1,22 @@
-import Allproducts from "../components/products/productFeed";
-import Home from "../pages/Home";
-import Listform from "../components/listings/listForm";
-import ListingDetail from "../components/listings/listingDetail";
-import Listingfeed from "../components/listings/listingFeed";
-import Login from "../pages/Login";
-import ProdDetail from "../components/products/productDetail";
-import Prodform from "../components/products/productForm";
-import Prodpage from "../pages/productPage";
-import Signup from "../pages/Signup";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
-import { cacheExchange, Client, fetchExchange, Provider } from "urql";
-import { clearStorage, getToken } from "../authStore";
-import "../styles/App.css";
-import { HSThemeAppearance } from "../theme";
+import Allproducts from '../components/products/productFeed';
+import Home from '../pages/Home';
+import Listform from '../components/listings/listForm';
+import ListingDetail from '../components/listings/listingDetail';
+import Listingfeed from '../components/listings/listingFeed';
+import Login from '../pages/Login';
+import ProdDetail from '../components/products/productDetail';
+import Prodform from '../components/products/productForm';
+import Prodpage from '../pages/productPage';
+import Signup from '../pages/Signup';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
+import { clearStorage, getToken } from '../authStore';
+import { HSThemeAppearance } from '../theme';
+import { IStaticMethods } from 'preline/preline';
+import '../styles/App.css';
+import 'preline/preline';
 
 
-import "preline/preline";
-import { IStaticMethods } from "preline/preline";
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;

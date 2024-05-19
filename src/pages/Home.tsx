@@ -1,6 +1,6 @@
-import amp from "../img/amplitude.svg";
-import hp from "../img/headphones.svg";
-import cassette from "../img/audio-cassette.svg";
+import amp from '../img/amplitude.svg';
+import cassette from '../img/audio-cassette.svg';
+import hp from '../img/headphones.svg';
 
 export default function Home() {
   return (
